@@ -9,11 +9,11 @@ const ClientesSchema = mongoose.Schema({
     },
     cpf: {
         type: Number,
-        unique: true
+        required: true
     },
     email: {
         type: String,
-        required: true
+        unique: true
     },
     compra: { type: Schema.ObjectId, ref: 'transacao' }
 });

@@ -5,12 +5,39 @@ const ClientesSchema = require('../models/cliente');
 const router = express.Router();
 
 //create Clientes
-router.post("/Cliente", (req, res) => {
-    const clientes = ClientesSchema(req.body);
-    clientes
-    .save()
-    .then((data) => res.status(201).send(clientes))
-    .catch((error) => res.status(404).json({ message: error }));
+router.post("/Cliente", async (req, res) => {
+const clientes = ClientesSchema(req.body);
+const erros = []
+clientes
+   try{  if (!req.body.name || req.body.name == null ) {
+        erros.push("Inserir o nome")
+    }
+
+    if (typeof req.body.name ==  "number"){
+        erros.push("Nome errado")
+    }
+
+    if (!req.body.cpf || req.body.cpf == null ) {
+         erros.push("Inserir o cpf")
+    }
+
+    if (typeof req.body.cpf ==  "string"){
+        erros.push("CPF errado")
+    }
+
+    if(erros.length > 0) {
+       res.status (404)
+       res.send(erros)
+    }   
+     else {
+        await clientes.save()
+     res.status(201).send("Cliente cadastrado con sucesso")
+     } }
+            
+     catch { if (!req.body == ClientesSchema)
+     res.status(500).send("Erro do lado do servidor")
+
+    }
 });
 
 
