@@ -18,7 +18,7 @@ app.use('/api', transacaoRouter);
 
 //routes
 app.get('/api', (req, res) => {
-    res.send("API LOJA DE PRODUTOS **SAUDE E VIDA**");
+    res.send("API LOJA DE PRODUTOS");
 });
 
 app.use((req, res, next) => {
@@ -31,9 +31,10 @@ app.use((error, req, res, next) => {
 });
 
 
+
 //mongodb connection
 mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log("Conectado com MONGODB Atlas"))
+    .then(() => console.log("connected to MONGODB atlas"))
     .catch((error) => console.error(error))
 
-app.listen(port, () => console.log('Servidor conectado na porta', port));
+app.listen(port, () => console.log('Server listning on port', port));

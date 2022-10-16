@@ -6,7 +6,7 @@ const transacaoSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    pagamento: {
+    forma_de_pagamento: {
         type: String,
         required: true
     },

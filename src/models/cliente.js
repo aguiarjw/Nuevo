@@ -4,8 +4,8 @@ const Schema = mongoose.Schema
 const ClientesSchema = mongoose.Schema({
     name: {
         type: String,
-     required: true,
-      
+        required: true,
+
     },
     cpf: {
         type: Number,
