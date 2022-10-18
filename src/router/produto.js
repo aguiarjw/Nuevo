@@ -3,6 +3,54 @@ const ProdutoSchema = require("../models/produto");
 const router = express.Router();
 
 //create produto
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    produto:
+ *     type: object
+ *     properties:
+ *       name: 
+ *        type: string
+ *        description: nombre del producto
+ *       descricao: 
+ *        type: string
+ *        description: descripción del producto
+ *       quantidade: 
+ *        type: number
+ *        description: calidad del producto
+ *       preco:
+ *        type: number
+ *        description: precio del producto
+ *     required:
+ *        -name
+ *        -descricao
+ *        -quantidade
+ *        -preco
+ *     ejemplo:
+ *         nome: leite
+ *         descricao: dfdgdf
+ *         quantidade: 2 tls
+ *         preco: R$ 15.00
+ */
+
+ /**
+ * @swagger
+ * /api/produto:
+ *  post: 
+ *   summary: registre producto
+ *   tags: [produto]
+ *   requestBody:
+ *    required: true
+ *    content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        $ref: '#/components/schemas/produto'
+ *   responses:
+ *    200:
+ *     description: producto registrado
+ */
 
 router.post("/produto", async (req, res) => {
     const produtos = ProdutoSchema(req.body);
@@ -61,6 +109,23 @@ router.post("/produto", async (req, res) => {
 });
 
 // get all produtos
+/**
+ * @swagger
+ * /api/produtos:
+ *  get: 
+ *   summary: mostrar todos los productos
+ *   tags: [produto]
+ *   responses:
+ *    200:
+ *     description: todos los productos
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: array
+ *        items:
+ *        $ref: '#/components/schemas/produto'
+ */
+
 router.get("/produtos", (req, res) => {
     ProdutoSchema
         .find()
@@ -69,6 +134,31 @@ router.get("/produtos", (req, res) => {
 });
 
 // get a produto
+/**
+ * @swagger
+ * /api/produto/{id}:
+ *  get: 
+ *   summary: mostrar un producto
+ *   tags: [produto]
+ *   parameters:
+ *   - in: path
+ *     name: id
+ *     schema:
+ *      type: string
+ *     required: true
+ *     description: id del produto
+ *   responses:
+ *    200:
+ *     description: id del produto
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        $ref: '#/components/schemas/produto'
+ *    404:
+ *      description: produto no encontrado
+ */
+
 router.get("/produto/:id", (req, res) => {
     const { id } = req.params;
     ProdutoSchema
@@ -78,7 +168,32 @@ router.get("/produto/:id", (req, res) => {
 });
 
 // update a produto
-
+/**
+ * @swagger
+ * /api/produto/{id}:
+ *  put: 
+ *   summary: actualizar produto
+ *   tags: [produto]
+ *   parameters:
+ *   - in: path
+ *     name: id
+ *     schema:
+ *      type: string
+ *     required: true
+ *     description: id del produto
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object
+ *       $ref: '#/components/schemas/produto'
+ *   responses:
+ *    200:
+ *     description: produto atualizado
+ *    404:
+ *      description: produto no encontrado
+ */
 
 router.put("/produto/:id", async (req, res) => {
     const { id } = req.params;
@@ -118,6 +233,26 @@ router.put("/produto/:id", async (req, res) => {
 });
 
 // delete a produto
+/**
+ * @swagger
+ * /api/produto/{id}:
+ *  delete: 
+ *   summary: eliminar un produto
+ *   tags: [produto]
+ *   parameters:
+ *   - in: path
+ *     name: id
+ *     schema:
+ *      type: string
+ *     required: true
+ *     description: id del produto
+ *   responses:
+ *    200:
+ *     description: Produto deletado com sucesso
+ *    404:
+ *      description: Produto não encontrado
+ */
+
 router.delete("/produto/:id", (req, res) => {
     const { id } = req.params;
     ProdutoSchema

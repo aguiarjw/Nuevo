@@ -4,6 +4,54 @@ const transacaoSchema = require("../models/transacao");
 const router = express.Router();
 
 //create transacao
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    transacao:
+ *     type: object
+ *     properties:
+ *       valor: 
+ *        type: number
+ *        description: preco
+ *       forma de pagamento: 
+ *        type: string
+ *        description: tipo de pago
+ *       data: 
+ *        type: number
+ *        description: fecha
+ *       item:
+ *        type: string
+ *        description: inventario
+ *     required:
+ *        -valor
+ *        -forma de pagamento
+ *        -item
+ *     ejemplo:
+ *         valor: 
+ *         forma de pagamento: 
+ *         data:
+ *         preco: 
+ */
+
+/**
+ * @swagger
+ * /api/transacao:
+ *  post: 
+ *   summary: transação efetuada
+ *   tags: [transacao]
+ *   requestBody:
+ *    required: true
+ *    content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        $ref: '#/components/schemas/transacao'
+ *   responses:
+ *    200:
+ *     description: transação efetuada
+ */
+
 router.post("/transacao", async (req, res) => {
     const transacao = transacaoSchema(req.body);
     const item = (req.body.item);
@@ -50,6 +98,22 @@ router.post("/transacao", async (req, res) => {
 });
 
 // get all transacao
+/**
+ * @swagger
+ * /api/transacao:
+ *  get: 
+ *   summary: montar todas as transações
+ *   tags: [transacao]
+ *   responses:
+ *    200:
+ *     description: Todas as transações
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: array
+ *        items:
+ *        $ref: '#/components/schemas/transacao'
+ */
 router.get("/transacao", (req, res) => {
     transacaoSchema
         .find()
@@ -59,6 +123,29 @@ router.get("/transacao", (req, res) => {
 });
 
 // get a transacao
+/**
+ * @swagger
+ * /api/transacao/{id}:
+ *  get: 
+ *   summary: Mostrar transação
+ *   tags: [transacao]
+ *   parameters:
+ *   - in: path
+ *     name: id
+ *     schema:
+ *      type: string
+ *     required: true
+ *   responses:
+ *    200:
+ *     description: Transacao actualizada com sucesso
+ *     content: 
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        $ref: '#/components/schemas/transacao'
+ *    404:
+ *      description: transação no encontrado
+ */
 router.get("/transacao/:id", (req, res) => {
     const { id } = req.params;
     transacaoSchema
@@ -69,6 +156,33 @@ router.get("/transacao/:id", (req, res) => {
 });
 
 //update a transacao
+/**
+ * @swagger
+ * /api/transacao/{id}:
+ *  put: 
+ *   summary: transacao atualizada
+ *   tags: [transacao]
+ *   parameters:
+ *   - in: path
+ *     name: id
+ *     schema:
+ *      type: string
+ *     required: true
+ *     description: id del produto
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object
+ *       $ref: '#/components/schemas/transacao'
+ *   responses:
+ *    200:
+ *     description: transação atualizada
+ *    404:
+ *      description: Transacao não encontrada
+ */
+
 router.put("/transacao/:id", async (req, res) => {
     const { id } = req.params;
     const { valor, forma_de_pagamento, item } = transacaoSchema(req.body);
@@ -99,6 +213,25 @@ router.put("/transacao/:id", async (req, res) => {
 });
 
 // delete a transacao
+/**
+ * @swagger
+ * /api/transacao/{id}:
+ *  delete: 
+ *   summary: Exclua uma transação
+ *   tags: [transacao]
+ *   parameters:
+ *   - in: path
+ *     name: id
+ *     schema:
+ *      type: string
+ *     required: true
+ *     description: id de transação
+ *   responses:
+ *    200:
+ *     description: transação deletada com sucesso
+ *    404:
+ *      description: Transação não encontrada
+ */
 router.delete("/transacao/:id", (req, res) => {
     const { id } = req.params;
     transacaoSchema
